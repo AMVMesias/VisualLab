@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": "user_001",
+      "username": "estudiante1",
+      "password": "demo123",
+      "email": "estudiante1@eduplatform.com",
+      "role": "student",
+      "createdAt": "2025-11-05T00:00:00.000Z"
+    },
+    {
+      "id": "user_002",
+      "username": "profesor1",
+      "password": "profesor123",
+      "email": "profesor1@eduplatform.com",
+      "role": "teacher",
+      "createdAt": "2025-11-05T00:00:00.000Z"
+    },
+    {
+      "id": "user_003",
+      "username": "admin",
+      "password": "admin123",
+      "email": "admin@eduplatform.com",
+      "role": "admin",
+      "createdAt": "2025-11-05T00:00:00.000Z"
+    }
+  ]
+}
