@@ -35,13 +35,10 @@ Sistema completo con autenticación, guardado automático y exportación de conf
 ## 🚀 Inicio Rápido
 
 ```bash
-# 1. Navegar al proyecto
-cd edu-platform
-
-# 2. Instalar dependencias
+# 1. Instalar dependencias
 npm install
 
-# 3. Ejecutar en modo desarrollo
+# 2. Ejecutar en modo desarrollo
 npm run dev
 
 # 4. Abrir navegador en:
