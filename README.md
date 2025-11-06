@@ -59,17 +59,6 @@ http://localhost:3001
 
 📖 **[LEE LA DOCUMENTACIÓN COMPLETA AQUÍ](../DOCUMENTACION_COMPLETA.md)**
 
-Un único documento con TODO lo que necesitas saber:
-- ✅ Guía de instalación paso a paso
-- ✅ Guía de uso completa
-- ✅ Usuarios y credenciales
-- ✅ Explicación del almacenamiento
-- ✅ Estructura del código
-- ✅ Arquitectura detallada
-- ✅ Preguntas frecuentes
-- ✅ Solución de problemas
-- ✅ **Con índice navegable**
-
 ---
 
 ## 🛠️ Tecnologías
@@ -180,22 +169,6 @@ npm run preview  # Preview del build
 
 ---
 
-## 🆘 Ayuda
-
-### ¿Problemas de instalación?
-→ [INSTALACION.md - Solución de Problemas](documentacion/guias/INSTALACION.md#️-solución-de-problemas)
-
-### ¿Cómo funciona algo?
-→ [GUIA_USO.md](documentacion/guias/GUIA_USO.md)
-
-### ¿Dónde está el código de X?
-→ [DIRECTORY_STRUCTURE.md](documentacion/arquitectura/DIRECTORY_STRUCTURE.md)
-
-### ¿Dónde se guardan los datos?
-→ [USUARIOS_PRUEBA.md - Almacenamiento](documentacion/credenciales/USUARIOS_PRUEBA.md#-almacenamiento-de-datos)
-
----
-
 ## 📝 Licencia
 
 MIT License - Proyecto educativo
@@ -204,8 +177,9 @@ MIT License - Proyecto educativo
 
 ## 👥 Autores
 
-Proyecto educativo - Universidad
-
+- Mesias Mariscal - [GitHub](https://github.com/mesiasmariscal)
+- Denise Rea
+- Julio Viche
 ---
 
 ## 🔗 Enlaces Rápidos
@@ -218,11 +192,3 @@ Proyecto educativo - Universidad
 
 ---
 
-<p align="center">
-  <strong>🎨 Plataforma Educativa v1.0.0</strong><br>
-  <em>Visualizadores Interactivos de Fractales y Figuras 3D</em>
-</p>
-
-<p align="center">
-  <sub>Consulta la <a href="documentacion/">documentación completa</a> para más información</sub>
-</p>
