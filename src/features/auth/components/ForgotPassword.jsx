@@ -1,30 +1,26 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuthStore } from '../store/authStore'
 import { AcademicCapIcon, EnvelopeIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 import '../styles/auth.css'
 
 function ForgotPassword() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState('')
+  const { resetPassword, loading, error, clearError } = useAuthStore()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     
     if (!email) {
-      setError('Por favor, ingresa tu correo electrónico')
       return
     }
 
-    // Validación básica de email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      setError('Por favor, ingresa un correo válido')
-      return
+    const result = await resetPassword(email)
+    
+    if (result.success) {
+      setSubmitted(true)
     }
-
-    // Por ahora solo mostramos mensaje - funcionalidad pendiente
-    setSubmitted(true)
   }
 
   if (submitted) {
@@ -53,23 +49,9 @@ function ForgotPassword() {
             </p>
           </div>
 
-          <div className="development-notice">
-            <span>🚧</span>
-            <p>Esta es una plantilla de demostración. La funcionalidad real estará disponible próximamente.</p>
-          </div>
-
           <Link to="/login" className="login-button">
             Volver al Login
           </Link>
-
-          <div className="test-users-reminder">
-            <h4>👥 Recuerda que puedes usar:</h4>
-            <ul>
-              <li>estudiante1 / demo123</li>
-              <li>profesor1 / profesor123</li>
-              <li>admin / admin123</li>
-            </ul>
-          </div>
         </div>
       </div>
     )
@@ -106,22 +88,18 @@ function ForgotPassword() {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value)
-                setError('')
+                clearError()
               }}
               placeholder="tu@email.com"
               autoComplete="email"
+              required
             />
           </div>
 
           {error && <div className="error-message">{error}</div>}
 
-          <div className="development-notice">
-            <span>🚧</span>
-            <p>Función en desarrollo. Usa un usuario de prueba para continuar.</p>
-          </div>
-
-          <button type="submit" className="login-button">
-            Enviar Instrucciones
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Enviando...' : 'Enviar Instrucciones'}
           </button>
 
           <div className="auth-links">
@@ -134,15 +112,6 @@ function ForgotPassword() {
             </Link>
           </div>
         </form>
-
-        <div className="test-users-info">
-          <h4>👥 Usuarios de Prueba Disponibles:</h4>
-          <ul>
-            <li><strong>estudiante1</strong> / demo123</li>
-            <li><strong>profesor1</strong> / profesor123</li>
-            <li><strong>admin</strong> / admin123</li>
-          </ul>
-        </div>
       </div>
     </div>
   )

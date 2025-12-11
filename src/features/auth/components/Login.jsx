@@ -6,26 +6,22 @@ import { AcademicCapIcon, UserIcon, LockClosedIcon } from '@heroicons/react/24/o
 import '../styles/auth.css'
 
 function Login() {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
   const navigate = useNavigate()
-  const login = useAuthStore((state) => state.login)
+  const { login, loading, error } = useAuthStore()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     
-    if (!username || !password) {
-      setError('Por favor, completa todos los campos')
+    if (!email || !password) {
       return
     }
     
-    const success = login(username, password)
+    const result = await login(email, password)
     
-    if (success) {
+    if (result.success) {
       navigate(ROUTES.DASHBOARD)
-    } else {
-      setError('Credenciales inválidas')
     }
   }
 
@@ -50,20 +46,18 @@ function Login() {
         
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label htmlFor="username">
+            <label htmlFor="email">
               <UserIcon className="h-5 w-5 inline-block mr-2" />
-              Usuario
+              Correo Electrónico
             </label>
             <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => {
-                setUsername(e.target.value)
-                setError('')
-              }}
-              placeholder="Ingresa tu usuario"
-              autoComplete="username"
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="tu@email.com"
+              autoComplete="email"
+              required
             />
           </div>
           
@@ -76,19 +70,17 @@ function Login() {
               type="password"
               id="password"
               value={password}
-              onChange={(e) => {
-                setPassword(e.target.value)
-                setError('')
-              }}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Ingresa tu contraseña"
               autoComplete="current-password"
+              required
             />
           </div>
           
           {error && <div className="error-message">{error}</div>}
           
-          <button type="submit" className="login-button">
-            Iniciar Sesión
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
           </button>
 
           <div className="auth-links">

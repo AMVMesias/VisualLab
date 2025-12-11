@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { useAuthStore } from '../store/authStore'
+import { ROUTES } from '../../../config'
 import { AcademicCapIcon, UserIcon, LockClosedIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
 import '../styles/auth.css'
 
@@ -10,38 +12,47 @@ function Register() {
     password: '',
     confirmPassword: ''
   })
-  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
   const navigate = useNavigate()
+  const { register, loading, error, clearError } = useAuthStore()
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
-    setError('')
+    clearError()
+    setSuccess(false)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     // Validaciones básicas
     if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword) {
-      setError('Por favor, completa todos los campos')
       return
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Las contraseñas no coinciden')
       return
     }
 
-    if (formData.password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres')
+    if (formData.password.length < 8) {
       return
     }
 
-    // Por ahora solo mostramos mensaje - funcionalidad pendiente
-    alert('🚧 Función en desarrollo\n\nEsta característica estará disponible próximamente.\n\nPor ahora, puedes usar uno de los usuarios de prueba:\n• estudiante1 / demo123\n• profesor1 / profesor123\n• admin / admin123')
+    const result = await register(formData.email, formData.password, {
+      username: formData.username
+    })
+
+    if (result.success) {
+      // Mostrar mensaje de éxito y redirigir al login
+      setSuccess(true)
+      // Esperar un momento para que el usuario vea el mensaje
+      setTimeout(() => {
+        navigate(ROUTES.LOGIN)
+      }, 2000)
+    }
   }
 
   return (
@@ -51,7 +62,7 @@ function Register() {
         <div className="geometric-shape shape-2"></div>
         <div className="geometric-shape shape-3"></div>
       </div>
-      
+
       <div className="login-card">
         <div className="login-header">
           <div className="logo">
@@ -62,7 +73,7 @@ function Register() {
           </div>
           <p className="subtitle">Únete a la Plataforma Educativa</p>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
             <label htmlFor="username">
@@ -95,7 +106,7 @@ function Register() {
               autoComplete="email"
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="password">
               <LockClosedIcon className="h-5 w-5 inline-block mr-2" />
@@ -107,8 +118,10 @@ function Register() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Mínimo 6 caracteres"
+              placeholder="Mínimo 8 caracteres"
               autoComplete="new-password"
+              required
+              minLength={8}
             />
           </div>
 
@@ -125,18 +138,20 @@ function Register() {
               onChange={handleChange}
               placeholder="Repite tu contraseña"
               autoComplete="new-password"
+              required
             />
           </div>
 
           {error && <div className="error-message">{error}</div>}
 
-          <div className="development-notice">
-            <span>🚧</span>
-            <p>Función en desarrollo. Usa un usuario de prueba para continuar.</p>
-          </div>
+          {success && (
+            <div className="success-message">
+               Cuenta creada. Por favor, verifica tu correo electrónico.
+            </div>
+          )}
 
-          <button type="submit" className="login-button">
-            Crear Cuenta
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
           </button>
 
           <div className="auth-links">
@@ -146,15 +161,6 @@ function Register() {
             </Link>
           </div>
         </form>
-
-        <div className="test-users-info">
-          <h4>👥 Usuarios de Prueba:</h4>
-          <ul>
-            <li><strong>estudiante1</strong> / demo123</li>
-            <li><strong>profesor1</strong> / profesor123</li>
-            <li><strong>admin</strong> / admin123</li>
-          </ul>
-        </div>
       </div>
     </div>
   )
